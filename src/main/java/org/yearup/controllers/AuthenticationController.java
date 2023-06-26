@@ -28,6 +28,7 @@ import org.yearup.security.jwt.TokenProvider;
 @PreAuthorize("permitAll()")
 public class AuthenticationController {
 
+
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private UserDao userDao;
