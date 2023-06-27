@@ -1,10 +1,7 @@
 package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
 import org.yearup.models.Category;
@@ -17,6 +14,8 @@ import java.util.List;
     // http://localhost:8080/categories
 // add annotation to allow cross site origin requests
 @RestController
+@RequestMapping("categories")
+@CrossOrigin
 public class CategoriesController
 {
     private CategoryDao categoryDao;
@@ -26,11 +25,19 @@ public class CategoriesController
     // create an Autowired controller to inject the categoryDao and ProductDao
 @Autowired
 public CategoriesController(CategoryDao mySqlCategoryDao) {this.categoryDao = mySqlCategoryDao; }
+
     // add the appropriate annotation for a get action
-    public List<Category> getAll()
-    {
+
+    @GetMapping
+    //@RequestMapping(path = "/books", method = RequestMethod.GET)
+    public List<Category> getAllCategories(@RequestParam(name = "category_id", required = false) int categoryId,
+                                  @RequestParam(name = "name", required = false) String name,
+                                           @RequestParam(name = "description", required = false) String description) {
         // find and return all categories
-        return null;
+        return categoryDao.getAllCategories(categoryId, name, description);
+
+        // find and return all categories
+
     }
 
     // add the appropriate annotation for a get action
