@@ -27,8 +27,10 @@ public class CategoriesController {
 
     // create an Autowired controller to inject the categoryDao and ProductDao
     @Autowired
-    public CategoriesController(CategoryDao mySqlCategoryDao) {
-        this.categoryDao = mySqlCategoryDao;
+
+    public CategoriesController(CategoryDao categoryDao, ProductDao productDao) {
+        this.categoryDao = categoryDao;
+        this.productDao = productDao;
     }
 
     // add the appropriate annotation for a get action
@@ -49,7 +51,6 @@ public class CategoriesController {
         }
 
     }
-
     // add the appropriate annotation for a get action
     public Category getById(@PathVariable int id) {
         {
@@ -75,15 +76,28 @@ public class CategoriesController {
     // https://localhost:8080/categories/1/products
     @GetMapping("{categoryId}/products")
     public List<Product> getProductsById(@PathVariable int categoryId) {
+
         // get a list of product by categoryId
         return null;
     }
 
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
+    @PostMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Category addCategory(@RequestBody Category category) {
         // insert the category
-        return null;
+        {
+
+            try
+            {
+                return categoryDao.create(category);
+            }
+            catch(Exception ex)
+            {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            }
+        }
     }
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
