@@ -35,23 +35,25 @@ public class CategoriesController {
 
     // add the appropriate annotation for a get action
 
+
     @GetMapping("")
-    @PreAuthorize("PermitAll()")
+    @PreAuthorize("permitAll()")
     //@RequestMapping(path = "/books", method = RequestMethod.GET)
-    public List<Category> getAllCategories(@RequestParam(name = "category_id", required = false) int categoryId,
-                                           @RequestParam(name = "name", required = false) String name,
-                                           @RequestParam(name = "description", required = false) String description) {
+    public List<Category> getAllCategories() {
         // find and return all categories
         {
             try {
-                return categoryDao.getAllCategories(categoryId, name, description);
+                return categoryDao.getAllCategories();
             } catch (Exception ex) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
             }
         }
 
     }
+
     // add the appropriate annotation for a get action
+    @GetMapping("{id}")
+    @PreAuthorize("permitAll()")
     public Category getById(@PathVariable int id) {
         {
             try
@@ -83,9 +85,11 @@ public class CategoriesController {
 
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
+    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Category addCategory(@RequestBody Category category) {
+
         // insert the category
         {
 
@@ -104,7 +108,7 @@ public class CategoriesController {
     // add annotation to ensure that only an ADMIN can call this function
     @PutMapping("{category_id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateCategory(@PathVariable int categoryId, @RequestBody Category category) {
+    public void updateCategory(@RequestBody Category category) {
         {
             try
             {
