@@ -114,7 +114,7 @@ public class CategoriesController {
     // add annotation to ensure that only an ADMIN can call this function
     @PutMapping("{category_id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateCategory(@RequestBody Category category) {
+    public void updateCategory(@PathVariable int categoryId,@RequestBody Category category) {
         {
             try {
                 categoryDao.create(category);
