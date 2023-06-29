@@ -34,7 +34,7 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
             setDescription("Testing");
         }};
         //act
-        dao.update(updatedCategory.getCategoryId(),updatedCategory);
+        dao.update(updatedCategory.getCategoryId(), updatedCategory);
 
         //assert
 
@@ -52,7 +52,8 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
                 setCategoryId(1);
                 setName("Electronics");
                 setDescription("Explore the latest gadgets and electronic devices.");
-            }};
+            }
+        };
         //act
         var actual = dao.getById(categoryId);
         //assert
@@ -64,7 +65,7 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
     @Test
     public void create_shouldCreate_newInformation() {
         //arrange
-        //act
-        //assert
+
+
     }
 }
