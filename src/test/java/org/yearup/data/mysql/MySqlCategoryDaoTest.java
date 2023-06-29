@@ -6,11 +6,15 @@ import org.yearup.models.Category;
 import org.yearup.models.Product;
 
 import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MySqlCategoryDaoTest extends BaseDaoTestClass {
     private MySqlCategoryDao dao;
@@ -22,24 +26,20 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
 
 
     @Test
-    public void update_shouldUpdate_productInformation() {
+    public void update_shouldUpdate_categoryInformation() {
         //arrange
-
-        String sql = "UPDATE categories SET name = ? WHERE Category_id = ?";
-
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, category.getName());
-            statement.setInt(2, categoryId);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        var updatedCategory = new Category() {{
+            setCategoryId(2);
+            setName("Fashion");
+            setDescription("Testing");
+        }};
         //act
+        dao.update(updatedCategory.getCategoryId(),updatedCategory);
 
         //assert
+
+        Category actual = dao.getById(updatedCategory.getCategoryId());
+        assertEquals(updatedCategory.getDescription(), actual.getDescription());
 
     }
 
@@ -50,13 +50,15 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
         var expected = new Category() {
             {
                 setCategoryId(1);
-                setName("Kitchen");
-                setDescription("supplies");
+                setName("Electronics");
+                setDescription("Explore the latest gadgets and electronic devices.");
             }};
         //act
         var actual = dao.getById(categoryId);
         //assert
-        assertEquals(expected.getCategoryId(), actual.getCategoryId(), "Because I tried to get product 1 from the database.");
+        assertEquals(expected.getCategoryId(), actual.getCategoryId());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getDescription(), actual.getDescription());
     }
 
     @Test
