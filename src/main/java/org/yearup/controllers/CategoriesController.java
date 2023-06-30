@@ -26,8 +26,8 @@ public class CategoriesController {
 
 
     // create an Autowired controller to inject the categoryDao and ProductDao
-    @Autowired
 
+    @Autowired
     public CategoriesController(CategoryDao categoryDao, ProductDao productDao) {
         this.categoryDao = categoryDao;
         this.productDao = productDao;
@@ -114,7 +114,7 @@ public class CategoriesController {
     // add annotation to ensure that only an ADMIN can call this function
     @PutMapping("{category_id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateCategory(@PathVariable int id,@RequestBody Category category) {
+    public void updateCategory(@PathVariable int id, @RequestBody Category category) {
         {
             try {
                 categoryDao.update(id, category);

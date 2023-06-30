@@ -78,4 +78,5 @@ class MySqlCategoryDaoTest extends BaseDaoTestClass {
         assertEquals(createCategory.getDescription(), actual.getDescription());
 
     }
+
 }

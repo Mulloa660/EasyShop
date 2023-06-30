@@ -63,7 +63,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // get category by id
+
         return null;
     }
 
@@ -114,7 +114,6 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        // update category
     }
 
     @Override
