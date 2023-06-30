@@ -145,6 +145,6 @@ public class CategoriesController {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
             }
         }
-        // delete the category by id
+        // delete the category by id.
     }
 }
